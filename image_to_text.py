@@ -3,9 +3,15 @@ import requests
 from PIL import Image
 import base64
 import io
+import os
+from dotenv import load_dotenv
 
-API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
-headers = {"Authorization": "Bearer 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"}
+load_dotenv()
+
+API_URL = os.getenv("api_url")
+API_KEY = os.getenv("api_key")
+
+headers = {"Authorization": f"Bearer {API_KEY}"}
 
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
@@ -28,5 +34,5 @@ def ImageToText(path):
     output = query(payload)
     return output[0].get("generated_text")
 
-# ans = ImageToText("village.jpg")
+# ans = ImageToText("assets/village.jpg")
 # print(ans)

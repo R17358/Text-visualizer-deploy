@@ -6,15 +6,20 @@ import google.generativeai as genai
 import streamlit as st
 import time
 from PIL import Image
-from Text_visualizer.otherImgGen import ImageGenerator as IG
+from otherImgGen import ImageGenerator as IG
 import PyPDF2
-from Text_visualizer.image_to_text import ImageToText
+from image_to_text import ImageToText
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.getenv("gemini_key")
 
 # requirement.txt file : pip freeze > requirements.txt
 
-
 # Configure API key and initialize model
-genai.configure(api_key="AIzaSyCZM5CxAWRDXxpstWUH1Wtl9KvOsk1rbvo")
+genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 if 'stop' not in st.session_state:

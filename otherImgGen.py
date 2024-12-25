@@ -5,9 +5,15 @@ from PIL import Image
 import numpy as np
 import time
 import cv2
+import os
+from dotenv import load_dotenv
 
-API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell"
-headers = {"Authorization": "Bearer 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"}
+load_dotenv()
+
+API_URL = os.getenv("otherImg_url")
+API_KEY = os.getenv("otherImg_key")
+
+headers = {"Authorization": f"Bearer {API_KEY}"}
 
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
