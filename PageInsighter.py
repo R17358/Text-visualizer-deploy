@@ -48,9 +48,18 @@ def recognize_text(image):
 
 def ans(ask):
     try:
-        response = model.generate_content(f"""explain {ask}. and write everything                               
-                in html format with inline style so render in markdown of streamlit. 
-                nothing else. don't use * symbols. use proper font and spaces. don't use ''' html in beginning""")
+        response = model.generate_content(f"""Please provide a detailed response to the following query in HTML format: {ask}. 
+The response should use proper inline CSS styles for formatting and be well-structured. 
+Always use `vi` for rendering in Streamlit's markdown feature. Avoid using markdown symbols or triple backticks in the output.
+
+Ensure the HTML is visually appealing and easy to read. 
+
+Additionally, implement the following dynamic styling for readability:
+- set the font color to dark (e.g., `#000000`),
+- set the background color light (e.g., `#FFFFFF`, `#F0F0F0`), 
+- set the backround border-radius of 8px.
+
+This ensures that the text is always readable regardless of the background color.""")
         return response.candidates[0].content.parts[0].text
     except Exception as e:
         st.error(e)
@@ -58,12 +67,24 @@ def ans(ask):
 def summarize_text(text, exp):
     try:
         if exp:
-            response = model.generate_content(f"""explain and solve if maths 
-                                              problem and provide the calculation and 
-                                              answer for {text}. and write everything                               
-                in html format with inline style so render in markdown of streamlit. 
-                nothing else. don't use * symbols. use proper font and spaces. dont use ''' html in beginning. If there
-                is not mathematical expression then explain the text in detail. use proper format for the text for proper representation and understanding""")
+            response = model.generate_content(f"""Determine if the input is a mathematical problem or descriptive text. 
+- If it is a mathematical problem, explain the steps clearly, provide detailed calculations, and include the final answer. 
+- If it is descriptive text, provide summary of {text}.
+Always use `vi` for rendering in Streamlit's markdown feature. Avoid using markdown symbols or triple backticks in the output.
+Write everything in HTML format with inline styles for rendering in Streamlit's markdown. 
+Ensure proper formatting for clarity and readability, using appropriate headings, paragraphs, and lists where necessary. 
+Avoid using symbols like * or triple backticks for formatting. 
+The response should be visually appealing, with attention to font size, color, and layout to ensure ease of understanding based on the type of input. 
+The input to be analyzed is: {text}.
+
+Additionally, implement the following dynamic styling for readability:
+- set the font color to dark (e.g., `#000000`).
+- set the background color light (e.g., `#FFFFFF`, `#F0F0F0`)
+- set the backround border-radius of 8px.
+
+This ensures that the text is always readable regardless of the background color."""
+
+)
         else:
             response = model.generate_content(f"Summarize the following text: {text}")
         return response.candidates[0].content.parts[0].text
@@ -72,7 +93,7 @@ def summarize_text(text, exp):
 
 def prompt(text):
     try:
-        response = model.generate_content(f"Generate a prompt for image generation for the given text: {text}. Only generate the single best prompt and nothing else.")
+        response = model.generate_content(f"Generate a detailed prompt for image generation for the given text: {text}. Only generate the single best prompt and nothing else.")
         return response.candidates[0].content.parts[0].text
     except Exception as e:
         st.error(e)
@@ -136,7 +157,7 @@ def processing(file, lang, flag, exp):
         # Display generated images
         
             for prom in prompt_list:
-                img, f = IG(f'3D realistic cartoonistic ultra HD {prom}')
+                img, f = IG(f'3D ultra HD vibrant {prom}')
                 st.image(img)
 
 # def upload_image():
@@ -204,7 +225,8 @@ with home:
             if ask:
                 if "image" in ask:
                     with st.spinner("Visualizing...."):
-                        img, f = IG(f"""{ask}""")
+                        prompt_img = prompt(ask)
+                        img, f = IG(f"""{prompt_img}""")
                         st.image(img)
                         ask = ""
                 else:
@@ -247,10 +269,24 @@ with home:
             if mainFile:
                 # mainFile = Image.open(mainFile)
                 out = ImageToText(mainFile)
-                fin_ans = model.generate_content(f"""if {out} contains mathematical expression then solve it stepwise. else explain the content. and write everything                               
-                    in html format with inline style so render in markdown of streamlit. 
-                    nothing else. don't use * symbols. use proper font and spaces. dont use ''' html in beginning. If there
-                    is not mathematical expression then explain the text in detail""")
+                fin_ans = model.generate_content(f"""Determine if the input is a mathematical problem or descriptive text. 
+- If it is a mathematical problem, explain the steps clearly, provide detailed calculations, and include the final answer. 
+- If it is descriptive text, provide a detailed and well-structured explanation.
+
+Write everything in HTML format with inline styles for rendering in Streamlit's markdown. 
+Ensure proper formatting for clarity and readability, using appropriate headings, paragraphs, and lists where necessary. 
+Avoid using symbols like * or triple backticks for formatting. 
+
+The response should be visually appealing, with attention to font size, color, and layout to ensure ease of understanding based on the type of input. 
+The input to be analyzed is: {out}.
+
+Additionally, implement the following dynamic styling for readability:
+- set the font color to dark (e.g., `#000000`),
+- set the background color light (e.g., `#FFFFFF`, `#F0F0F0`),
+- set the backround border-radius of 8px,
+This ensures that the text is always readable regardless of the background color."""
+)
+
                 #print(fin_ans)
                 print_flag = "s2"
                 ans = fin_ans.text
