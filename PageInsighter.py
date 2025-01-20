@@ -13,7 +13,7 @@ import os
 from dotenv import load_dotenv
 
 # Set the Tesseract command path
-pytesseract.pytesseract.tesseract_cmd = "/usr/local/bin/tesseract"
+pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
 # Test if it works
 print(pytesseract.get_tesseract_version())
