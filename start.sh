@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # Update package list and install Tesseract at runtime
