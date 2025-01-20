@@ -8,10 +8,10 @@ cd /opt/tesseract
 wget https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.0.tar.gz
 
 # Extract it
-tar -xvzf tesseract-5.3.3-linux-x86_64.tar.gz
+tar -xvzf tesseract-5.5.0.tar.gz
 
 # Move Tesseract binary to PATH
-mv tesseract-5.3.3/bin/tesseract /usr/local/bin/
+mv tesseract-5.5.0/bin/tesseract /usr/local/bin/
 
 # Verify installation
 /usr/local/bin/tesseract -v
