@@ -11,7 +11,7 @@ cp /app/tesseract-5.5.0.tar.gz .
 tar -xvzf tesseract-5.5.0.tar.gz
 
 # Locate the extracted Tesseract binary
-TES_PATH=$(find tesseract -type f -name "tesseract" | head -n 1)
+TES_PATH=$(find tesseract -type f -name "Tesseract" | head -n 1)
 
 # Move the binary to a directory in PATH
 if [[ -f "$TES_PATH" ]]; then
