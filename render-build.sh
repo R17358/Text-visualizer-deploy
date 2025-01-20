@@ -28,7 +28,7 @@ cd /opt
 wget https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.0.tar.gz
 
 # Extract Tesseract source code
-tar -xvzf tesseract-5.5.0.tar.gz
+tar -xvzf 5.5.0.tar.gz
 cd tesseract-5.5.0
 
 # Configure and build Tesseract
