@@ -12,6 +12,13 @@ from image_to_text import ImageToText
 import os
 from dotenv import load_dotenv
 
+# Set the Tesseract command path
+pytesseract.pytesseract.tesseract_cmd = "/usr/local/bin/tesseract"
+
+# Test if it works
+print(pytesseract.get_tesseract_version())
+
+
 load_dotenv()
 
 API_KEY = os.getenv("gemini_key")
