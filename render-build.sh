@@ -1,41 +1,17 @@
 #!/bin/bash
 
-# Create a directory for Tesseract and Leptonica in a writable location
+# Create a directory for Tesseract in a writable location
 mkdir -p /opt/tesseract
 cd /opt/tesseract
 
-# Download Tesseract prebuilt binary from GitHub
-wget https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.0.tar.gz
+# Download precompiled Tesseract binary (v5.5.0)
+wget https://github.com/UB-Mannheim/tesseract/wiki
 
-# Extract Tesseract binary
-tar -xvzf 5.5.0.tar.gz
+# Extract the Tesseract binary from the tar.gz file
+tar -xvzf tesseract-5.5.0-linux-x86_64.tar.gz
 
-# Install Leptonica dependencies
-apt-get update && apt-get install -y \
-    build-essential \
-    wget \
-    pkg-config \
-    libpng-dev \
-    libjpeg8-dev \
-    libtiff-dev \
-    zlib1g-dev \
-    libicu-dev \
-    libpango1.0-dev
+# Move Tesseract binary to a directory in PATH
+mv tesseract-5.5.0/bin/tesseract /usr/local/bin/
 
-# Download Leptonica source and build it
-cd /opt
-wget https://github.com/DanBloomberg/leptonica/releases/download/1.82.0/leptonica-1.82.0.tar.gz
-tar -xvzf leptonica-1.82.0.tar.gz
-cd leptonica-1.82.0
-./configure
-make
-make install
-
-# Re-configure and install Tesseract
-cd /opt/tesseract/tesseract-5.5.0
-./configure
-make
-make install
-
-# Verify Tesseract installation
+# Verify the installation
 /usr/local/bin/tesseract -v
