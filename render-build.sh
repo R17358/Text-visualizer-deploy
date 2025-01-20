@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # Create a directory for Tesseract
-mkdir -p tesseract_install
-cd tesseract_install
+mkdir -p /opt/tesseract
+cd /opt/tesseract
 
-# Download Tesseract prebuilt binary
-wget https://github.com/tesseract-ocr/tesseract/releases/download/5.3.3/tesseract-5.3.3-linux-x86_64.tar.gz
+# Copy Tesseract from the project folder
+cp /app/tesseract/tesseract-5.5.0.tar.gz .
 
 # Extract the Tesseract binary
-tar -xvzf tesseract-5.3.3-linux-x86_64.tar.gz
+tar -xvzf tesseract-5.5.0.tar.gz
 
 # Move the binary to a directory in PATH
-mv tesseract-5.3.3/bin/tesseract /usr/local/bin/
+mv tesseract-5.5.0/bin/tesseract /usr/local/bin/
 
 # Verify installation
 /usr/local/bin/tesseract -v
