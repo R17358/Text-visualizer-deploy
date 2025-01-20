@@ -4,14 +4,23 @@
 mkdir -p /opt/tesseract
 cd /opt/tesseract
 
-# Copy Tesseract from the project folder
+# Copy the Tesseract archive from the project root
 cp /app/tesseract-5.5.0.tar.gz .
 
-# Extract the Tesseract binary
+# Extract the archive
 tar -xvzf tesseract-5.5.0.tar.gz
 
+# Locate the extracted Tesseract binary
+TES_PATH=$(find /opt/tesseract -type f -name "tesseract" | head -n 1)
+
 # Move the binary to a directory in PATH
-mv tesseract-5.5.0/bin/tesseract /usr/local/bin/
+if [[ -f "$TES_PATH" ]]; then
+    chmod +x "$TES_PATH"
+    mv "$TES_PATH" /usr/local/bin/tesseract
+else
+    echo "Error: Tesseract binary not found after extraction."
+    exit 1
+fi
 
 # Verify installation
 /usr/local/bin/tesseract -v
