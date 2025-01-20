@@ -5,7 +5,7 @@ mkdir -p /opt/tesseract
 cd /opt/tesseract
 
 # Copy Tesseract from the project folder
-cp /app/tesseract/tesseract-5.5.0.tar.gz .
+cp /app/tesseract-5.5.0.tar.gz .
 
 # Extract the Tesseract binary
 tar -xvzf tesseract-5.5.0.tar.gz
