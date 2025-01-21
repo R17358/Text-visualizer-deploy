@@ -7,4 +7,9 @@ numpy
 PyPDF2
 google-generativeai
 easyocr
+torch
+torchvision
+torchaudio
+
+
 
