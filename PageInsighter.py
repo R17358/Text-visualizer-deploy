@@ -12,9 +12,11 @@ from image_to_text import ImageToText
 import os
 from dotenv import load_dotenv
 
+@st.cache_resource
+def load_easyocr():
+    return easyocr.Reader(['en','hi'])  # Load model from cache
 
-# Initialize the EasyOCR Reader
-reader = easyocr.Reader(['en','hi'])  # You can add more languages if needed
+reader = load_easyocr()  # Load once, use multiple times
 
 load_dotenv()
 
@@ -44,8 +46,8 @@ def stream_data(data, delay: float = 0.1):
 def recognize_text(image):
     try:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        text = reader.readtext(gray)
-        return text.strip()
+        text_data = reader.readtext(gray)
+        return " ".join([item[1] for item in text_data]) if text_data else ""
     except Exception as e:
         st.error(e)
         return None
