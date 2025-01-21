@@ -1,6 +1,6 @@
 import cv2
 import os
-import pytesseract
+import easyocr
 import numpy as np
 import google.generativeai as genai
 import streamlit as st
@@ -12,12 +12,9 @@ from image_to_text import ImageToText
 import os
 from dotenv import load_dotenv
 
-# Set the Tesseract command path
-pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
-# Test if it works
-print(pytesseract.get_tesseract_version())
-
+# Initialize the EasyOCR Reader
+reader = easyocr.Reader(['en','hi'])  # You can add more languages if needed
 
 load_dotenv()
 
@@ -47,7 +44,7 @@ def stream_data(data, delay: float = 0.1):
 def recognize_text(image):
     try:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        text = pytesseract.image_to_string(gray, lang='hin+eng')            # lang='hin+eng'
+        text = reader.readtext(gray)
         return text.strip()
     except Exception as e:
         st.error(e)
