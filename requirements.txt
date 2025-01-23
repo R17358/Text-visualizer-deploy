@@ -6,9 +6,6 @@ opencv-python
 numpy
 PyPDF2
 google-generativeai
-torch
-torchvision
-torchaudio
 pytesseract
 
 
